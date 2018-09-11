@@ -1,4 +1,4 @@
-# Sample Gateway
+# GoCardless Gateway
 
 [![Build Status](https://travis-ci.org/blesta/gateway-gocardless.svg?branch=master)](https://travis-ci.org/blesta/gateway-gocardless) [![Coverage Status](https://coveralls.io/repos/github/blesta/gateway-gocardless/badge.svg?branch=master)](https://coveralls.io/github/blesta/gateway-gocardless?branch=master)
 
