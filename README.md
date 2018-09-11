@@ -26,4 +26,4 @@ your Blesta installation path.
 
 4. Find the GoCardless gateway and click the "Install" button to install it
 
-5. You're done!
+5. Configure by setting your "Access Token" and "Webhook Secret", both of which are found in the Developer section of your GoCardless account.

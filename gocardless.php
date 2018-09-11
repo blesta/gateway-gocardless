@@ -13,7 +13,7 @@ class Gocardless extends NonmerchantGateway
     /**
      * @var string The version of this gateway
      */
-    private static $version = '1.0.2';
+    private static $version = '1.1.0';
 
     /**
      * @var string The authors of this gateway
