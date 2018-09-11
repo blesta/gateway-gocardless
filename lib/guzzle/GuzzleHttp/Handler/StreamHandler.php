@@ -233,8 +233,8 @@ class StreamHandler
         set_error_handler(function ($_, $msg, $file, $line) use (&$errors) {
             $errors[] = [
                 'message' => $msg,
-                'file'    => $file,
-                'line'    => $line
+                'file' => $file,
+                'line' => $line
             ];
             return true;
         });
@@ -369,11 +369,11 @@ class StreamHandler
 
         $context = [
             'http' => [
-                'method'           => $request->getMethod(),
-                'header'           => $headers,
+                'method' => $request->getMethod(),
+                'header' => $headers,
                 'protocol_version' => $request->getProtocolVersion(),
-                'ignore_errors'    => true,
-                'follow_location'  => 0,
+                'ignore_errors' => true,
+                'follow_location' => 0,
             ],
         ];
 
@@ -477,16 +477,16 @@ class StreamHandler
         }
 
         static $map = [
-            STREAM_NOTIFY_CONNECT       => 'CONNECT',
+            STREAM_NOTIFY_CONNECT => 'CONNECT',
             STREAM_NOTIFY_AUTH_REQUIRED => 'AUTH_REQUIRED',
-            STREAM_NOTIFY_AUTH_RESULT   => 'AUTH_RESULT',
-            STREAM_NOTIFY_MIME_TYPE_IS  => 'MIME_TYPE_IS',
-            STREAM_NOTIFY_FILE_SIZE_IS  => 'FILE_SIZE_IS',
-            STREAM_NOTIFY_REDIRECTED    => 'REDIRECTED',
-            STREAM_NOTIFY_PROGRESS      => 'PROGRESS',
-            STREAM_NOTIFY_FAILURE       => 'FAILURE',
-            STREAM_NOTIFY_COMPLETED     => 'COMPLETED',
-            STREAM_NOTIFY_RESOLVE       => 'RESOLVE',
+            STREAM_NOTIFY_AUTH_RESULT => 'AUTH_RESULT',
+            STREAM_NOTIFY_MIME_TYPE_IS => 'MIME_TYPE_IS',
+            STREAM_NOTIFY_FILE_SIZE_IS => 'FILE_SIZE_IS',
+            STREAM_NOTIFY_REDIRECTED => 'REDIRECTED',
+            STREAM_NOTIFY_PROGRESS => 'PROGRESS',
+            STREAM_NOTIFY_FAILURE => 'FAILURE',
+            STREAM_NOTIFY_COMPLETED => 'COMPLETED',
+            STREAM_NOTIFY_RESOLVE => 'RESOLVE',
         ];
         static $args = ['severity', 'message', 'message_code',
             'bytes_transferred', 'bytes_max'];

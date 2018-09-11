@@ -159,10 +159,10 @@ class Client implements ClientInterface
     {
         $defaults = [
             'allow_redirects' => RedirectMiddleware::$defaultSettings,
-            'http_errors'     => true,
-            'decode_content'  => true,
-            'verify'          => true,
-            'cookies'         => false
+            'http_errors' => true,
+            'decode_content' => true,
+            'verify' => true,
+            'cookies' => false
         ];
 
         // Use the standard Linux HTTP_PROXY and HTTPS_PROXY if set.

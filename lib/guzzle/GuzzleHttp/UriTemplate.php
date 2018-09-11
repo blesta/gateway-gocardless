@@ -16,7 +16,7 @@ class UriTemplate
 
     /** @var array Hash for quick operator lookups */
     private static $operatorHash = [
-        ''  => ['prefix' => '',  'joiner' => ',', 'query' => false],
+        '' => ['prefix' => '',  'joiner' => ',', 'query' => false],
         '+' => ['prefix' => '',  'joiner' => ',', 'query' => false],
         '#' => ['prefix' => '#', 'joiner' => ',', 'query' => false],
         '.' => ['prefix' => '.', 'joiner' => '.', 'query' => false],

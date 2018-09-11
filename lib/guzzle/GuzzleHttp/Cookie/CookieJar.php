@@ -47,9 +47,9 @@ class CookieJar implements CookieJarInterface
         $cookieJar = new self();
         foreach ($cookies as $name => $value) {
             $cookieJar->setCookie(new SetCookie([
-                'Domain'  => $domain,
-                'Name'    => $name,
-                'Value'   => $value,
+                'Domain' => $domain,
+                'Name' => $name,
+                'Value' => $value,
                 'Discard' => true
             ]));
         }
@@ -254,7 +254,7 @@ class CookieJar implements CookieJarInterface
     private function getCookiePathFromRequest(RequestInterface $request)
     {
         $uriPath = $request->getUri()->getPath();
-        if (''  === $uriPath) {
+        if ('' === $uriPath) {
             return '/';
         }
         if (0 !== strpos($uriPath, '/')) {

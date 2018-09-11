@@ -21,7 +21,7 @@ use \GoCardlessPro\Core\Exception\InvalidStateException;
 class BankDetailsLookupsService extends BaseService
 {
 
-    protected $envelope_key   = 'bank_details_lookups';
+    protected $envelope_key = 'bank_details_lookups';
     protected $resource_class = '\GoCardlessPro\Resources\BankDetailsLookup';
 
 

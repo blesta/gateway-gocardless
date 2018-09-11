@@ -21,7 +21,7 @@ use \GoCardlessPro\Core\Exception\InvalidStateException;
 class RefundsService extends BaseService
 {
 
-    protected $envelope_key   = 'refunds';
+    protected $envelope_key = 'refunds';
     protected $resource_class = '\GoCardlessPro\Resources\Refund';
 
 

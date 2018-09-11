@@ -21,7 +21,7 @@ use \GoCardlessPro\Core\Exception\InvalidStateException;
 class EventsService extends BaseService
 {
 
-    protected $envelope_key   = 'events';
+    protected $envelope_key = 'events';
     protected $resource_class = '\GoCardlessPro\Resources\Event';
 
 
