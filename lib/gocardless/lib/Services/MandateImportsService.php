@@ -21,7 +21,7 @@ use \GoCardlessPro\Core\Exception\InvalidStateException;
 class MandateImportsService extends BaseService
 {
 
-    protected $envelope_key   = 'mandate_imports';
+    protected $envelope_key = 'mandate_imports';
     protected $resource_class = '\GoCardlessPro\Resources\MandateImport';
 
 

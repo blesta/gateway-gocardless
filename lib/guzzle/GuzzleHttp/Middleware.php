@@ -89,19 +89,19 @@ final class Middleware
                 return $handler($request, $options)->then(
                     function ($value) use ($request, &$container, $options) {
                         $container[] = [
-                            'request'  => $request,
+                            'request' => $request,
                             'response' => $value,
-                            'error'    => null,
-                            'options'  => $options
+                            'error' => null,
+                            'options' => $options
                         ];
                         return $value;
                     },
                     function ($reason) use ($request, &$container, $options) {
                         $container[] = [
-                            'request'  => $request,
+                            'request' => $request,
                             'response' => null,
-                            'error'    => $reason,
-                            'options'  => $options
+                            'error' => $reason,
+                            'options' => $options
                         ];
                         return \GuzzleHttp\Promise\rejection_for($reason);
                     }

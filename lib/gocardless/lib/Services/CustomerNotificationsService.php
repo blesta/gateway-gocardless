@@ -21,7 +21,7 @@ use \GoCardlessPro\Core\Exception\InvalidStateException;
 class CustomerNotificationsService extends BaseService
 {
 
-    protected $envelope_key   = 'customer_notifications';
+    protected $envelope_key = 'customer_notifications';
     protected $resource_class = '\GoCardlessPro\Resources\CustomerNotification';
 
 

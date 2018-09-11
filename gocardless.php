@@ -4,7 +4,7 @@
  *
  * @package blesta
  * @subpackage blesta.components.gateways.gocardless
- * @copyright Copyright (c) 2010, Phillips Data, Inc.
+ * @copyright Copyright (c) 2018, Phillips Data, Inc.
  * @license http://www.blesta.com/license/ The Blesta License Agreement
  * @link http://www.blesta.com/ Blesta
  */
@@ -18,7 +18,7 @@ class Gocardless extends NonmerchantGateway
     /**
      * @var string The authors of this gateway
      */
-    private static $authors = [['name'=>'Phillips Data, Inc.', 'url'=>'http://www.blesta.com']];
+    private static $authors = [['name' => 'Phillips Data, Inc.', 'url' => 'http://www.blesta.com']];
 
     /**
      * @var array An array of meta data for this gateway
@@ -242,8 +242,7 @@ class Gocardless extends NonmerchantGateway
         // Check if this transaction is eligible for subscription
         $recurring = false;
 
-        if (
-            $this->ifSet($options['recur']) &&
+        if ($this->ifSet($options['recur']) &&
             $this->ifSet($options['recur']['amount']) > 0 &&
             $this->ifSet($options['recur']['amount']) == $amount &&
             $this->ifSet($options['recur']['period']) !== 'day'
@@ -276,7 +275,12 @@ class Gocardless extends NonmerchantGateway
                 $redirect_flow = $api->redirectFlows()->complete($this->ifSet($_GET['redirect_flow_id']), $params);
 
                 // Log the API response
-                $this->log($this->ifSet($_SERVER['REQUEST_URI']), serialize($redirect_flow), 'output', $this->getResponseStatus($redirect_flow));
+                $this->log(
+                    $this->ifSet($_SERVER['REQUEST_URI']),
+                    serialize($redirect_flow),
+                    'output',
+                    $this->getResponseStatus($redirect_flow)
+                );
 
                 // Create payment or subscription
                 if ($pay_type == 'subscribe') {
@@ -306,7 +310,9 @@ class Gocardless extends NonmerchantGateway
                                 'client_id' => $this->ifSet($contact_info['client_id'])
                             ],
                             'links' => [
-                                'mandate' => $this->ifSet($redirect_flow->api_response->body->redirect_flows->links->mandate)
+                                'mandate' => $this->ifSet(
+                                    $redirect_flow->api_response->body->redirect_flows->links->mandate
+                                )
                             ]
                         ]
                     ];
@@ -323,7 +329,12 @@ class Gocardless extends NonmerchantGateway
                     $subscription = $api->subscriptions()->create($params);
 
                     // Log the API response
-                    $this->log($this->ifSet($_SERVER['REQUEST_URI']), serialize($subscription), 'output', $this->getResponseStatus($subscription));
+                    $this->log(
+                        $this->ifSet($_SERVER['REQUEST_URI']),
+                        serialize($subscription),
+                        'output',
+                        $this->getResponseStatus($subscription)
+                    );
 
                     // Redirect to the return url
                     $return_url = $this->generateReturnUrl($this->ifSet($options['return_url']), [
@@ -341,7 +352,9 @@ class Gocardless extends NonmerchantGateway
                                 'client_id' => $this->ifSet($contact_info['client_id'])
                             ],
                             'links' => [
-                                'mandate' => $this->ifSet($redirect_flow->api_response->body->redirect_flows->links->mandate)
+                                'mandate' => $this->ifSet(
+                                    $redirect_flow->api_response->body->redirect_flows->links->mandate
+                                )
                             ]
                         ]
                     ];
@@ -349,7 +362,12 @@ class Gocardless extends NonmerchantGateway
                     $payment = $api->payments()->create($params);
 
                     // Log the API response
-                    $this->log($this->ifSet($_SERVER['REQUEST_URI']), serialize($payment), 'output', $this->getResponseStatus($subscription));
+                    $this->log(
+                        $this->ifSet($_SERVER['REQUEST_URI']),
+                        serialize($payment),
+                        'output',
+                        $this->getResponseStatus($subscription)
+                    );
 
                     // Redirect to the return url
                     $return_url = $this->generateReturnUrl($this->ifSet($options['return_url']), [
@@ -398,7 +416,12 @@ class Gocardless extends NonmerchantGateway
                 $redirect_flow = $api->redirectFlows()->create($params);
 
                 // Log the API response
-                $this->log($this->ifSet($_SERVER['REQUEST_URI']), serialize($redirect_flow), 'output', $this->getResponseStatus($redirect_flow));
+                $this->log(
+                    $this->ifSet($_SERVER['REQUEST_URI']),
+                    serialize($redirect_flow),
+                    'output',
+                    $this->getResponseStatus($redirect_flow)
+                );
 
                 // Redirect to the authorization page
                 $this->redirectToUrl($this->ifSet($redirect_flow->redirect_url));
@@ -508,7 +531,12 @@ class Gocardless extends NonmerchantGateway
         }
 
         // Log the API response
-        $this->log($this->ifSet($_SERVER['REQUEST_URI']), serialize($payment_details), 'output', $this->getResponseStatus($payment));
+        $this->log(
+            $this->ifSet($_SERVER['REQUEST_URI']),
+            serialize($payment_details),
+            'output',
+            $this->getResponseStatus($payment)
+        );
 
         // Capture the webhook status, or reject it if invalid
         $status = 'error';
@@ -559,10 +587,16 @@ class Gocardless extends NonmerchantGateway
         }
 
         // Get client id
-        $client_id = $this->ifSet($payment_details->metadata->client_id, $this->ifSet($subscription_details->metadata->client_id));
+        $client_id = $this->ifSet(
+            $payment_details->metadata->client_id,
+            $this->ifSet($subscription_details->metadata->client_id)
+        );
 
         // Get invoices
-        $invoices = $this->ifSet($payment_details->metadata->invoices, $this->ifSet($subscription_details->metadata->invoices));
+        $invoices = $this->ifSet(
+            $payment_details->metadata->invoices,
+            $this->ifSet($subscription_details->metadata->invoices)
+        );
 
         // Force 2-decimal places only
         $amount = $this->ifSet($payment_details->amount, 0) / 100;
@@ -627,7 +661,12 @@ class Gocardless extends NonmerchantGateway
             }
 
             // Log the API response
-            $this->log($this->ifSet($_SERVER['REQUEST_URI']), serialize($payment_details), 'output', $this->getResponseStatus($payment));
+            $this->log(
+                $this->ifSet($_SERVER['REQUEST_URI']),
+                serialize($payment_details),
+                'output',
+                $this->getResponseStatus($payment)
+            );
         } catch (\GoCardlessPro\Core\Exception\ApiException $e) {
             $this->Input->setErrors(
                 ['internal' => ['response' => $e->getMessage()]]
@@ -693,7 +732,12 @@ class Gocardless extends NonmerchantGateway
             $payment_details = $payment->api_response->body->payments;
 
             // Log the API response
-            $this->log($this->ifSet($_SERVER['REQUEST_URI']), serialize($payment_details), 'output', $this->getResponseStatus($payment));
+            $this->log(
+                $this->ifSet($_SERVER['REQUEST_URI']),
+                serialize($payment_details),
+                'output',
+                $this->getResponseStatus($payment)
+            );
 
             // Check if the payment it's associated to an active subscription
             if (isset($payment_details->links->subscription)) {
@@ -702,7 +746,12 @@ class Gocardless extends NonmerchantGateway
             }
 
             // Log the API response
-            $this->log($this->ifSet($_SERVER['REQUEST_URI']), serialize($subscription_details), 'output', $this->getResponseStatus($subscription));
+            $this->log(
+                $this->ifSet($_SERVER['REQUEST_URI']),
+                serialize($subscription_details),
+                'output',
+                $this->getResponseStatus($subscription)
+            );
 
             // Cancel active subscription
             if (isset($subscription_details->id)) {
@@ -767,7 +816,12 @@ class Gocardless extends NonmerchantGateway
                 }
 
                 // Log the successful response
-                $this->log($this->ifSet($_SERVER['REQUEST_URI']), serialize($refund), 'output', $this->getResponseStatus($refund));
+                $this->log(
+                    $this->ifSet($_SERVER['REQUEST_URI']),
+                    serialize($refund),
+                    'output',
+                    $this->getResponseStatus($refund)
+                );
 
                 return [
                     'status' => 'refunded',
@@ -864,7 +918,8 @@ class Gocardless extends NonmerchantGateway
     private function generateReturnUrl($return_url = null, $params = [])
     {
         if (is_null($return_url)) {
-            $return_url = 'http' . (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off' ? 's' : '') . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+            $return_url = 'http' . (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off' ? 's' : '')
+                . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
         }
 
         if (!empty($params)) {
@@ -902,7 +957,9 @@ class Gocardless extends NonmerchantGateway
     {
         $status = false;
 
-        if ($this->ifSet($api_response->api_response->status_code) >= 200 && $this->ifSet($api_response->api_response->status_code) < 300) {
+        if ($this->ifSet($api_response->api_response->status_code) >= 200
+            && $this->ifSet($api_response->api_response->status_code) < 300
+        ) {
             $status = true;
         }
 

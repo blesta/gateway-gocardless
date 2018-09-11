@@ -152,11 +152,11 @@ class CurlFactory implements CurlFactoryInterface
     private static function createRejection(EasyHandle $easy, array $ctx)
     {
         static $connectionErrors = [
-            CURLE_OPERATION_TIMEOUTED  => true,
+            CURLE_OPERATION_TIMEOUTED => true,
             CURLE_COULDNT_RESOLVE_HOST => true,
-            CURLE_COULDNT_CONNECT      => true,
-            CURLE_SSL_CONNECT_ERROR    => true,
-            CURLE_GOT_NOTHING          => true,
+            CURLE_COULDNT_CONNECT => true,
+            CURLE_SSL_CONNECT_ERROR => true,
+            CURLE_GOT_NOTHING => true,
         ];
 
         // If an exception was encountered during the onHeaders event, then
@@ -191,11 +191,11 @@ class CurlFactory implements CurlFactoryInterface
     private function getDefaultConf(EasyHandle $easy)
     {
         $conf = [
-            '_headers'             => $easy->request->getHeaders(),
-            CURLOPT_CUSTOMREQUEST  => $easy->request->getMethod(),
-            CURLOPT_URL            => (string) $easy->request->getUri()->withFragment(''),
+            '_headers' => $easy->request->getHeaders(),
+            CURLOPT_CUSTOMREQUEST => $easy->request->getMethod(),
+            CURLOPT_URL => (string) $easy->request->getUri()->withFragment(''),
             CURLOPT_RETURNTRANSFER => false,
-            CURLOPT_HEADER         => false,
+            CURLOPT_HEADER => false,
             CURLOPT_CONNECTTIMEOUT => 150,
         ];
 

@@ -21,7 +21,7 @@ use \GoCardlessPro\Core\Exception\InvalidStateException;
 class RedirectFlowsService extends BaseService
 {
 
-    protected $envelope_key   = 'redirect_flows';
+    protected $envelope_key = 'redirect_flows';
     protected $resource_class = '\GoCardlessPro\Resources\RedirectFlow';
 
 

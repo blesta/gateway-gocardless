@@ -21,7 +21,7 @@ use \GoCardlessPro\Core\Exception\InvalidStateException;
 class MandatePdfsService extends BaseService
 {
 
-    protected $envelope_key   = 'mandate_pdfs';
+    protected $envelope_key = 'mandate_pdfs';
     protected $resource_class = '\GoCardlessPro\Resources\MandatePdf';
 
 

@@ -350,7 +350,7 @@ function each(
 ) {
     return (new EachPromise($iterable, [
         'fulfilled' => $onFulfilled,
-        'rejected'  => $onRejected
+        'rejected' => $onRejected
     ]))->promise();
 }
 
@@ -376,8 +376,8 @@ function each_limit(
     callable $onRejected = null
 ) {
     return (new EachPromise($iterable, [
-        'fulfilled'   => $onFulfilled,
-        'rejected'    => $onRejected,
+        'fulfilled' => $onFulfilled,
+        'rejected' => $onRejected,
         'concurrency' => $concurrency
     ]))->promise();
 }

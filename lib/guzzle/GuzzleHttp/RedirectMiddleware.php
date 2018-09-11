@@ -22,10 +22,10 @@ class RedirectMiddleware
     const STATUS_HISTORY_HEADER = 'X-Guzzle-Redirect-Status-History';
 
     public static $defaultSettings = [
-        'max'             => 5,
-        'protocols'       => ['http', 'https'],
-        'strict'          => false,
-        'referer'         => false,
+        'max' => 5,
+        'protocols' => ['http', 'https'],
+        'strict' => false,
+        'referer' => false,
         'track_redirects' => false,
     ];
 

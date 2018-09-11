@@ -21,7 +21,7 @@ use \GoCardlessPro\Core\Exception\InvalidStateException;
 class CreditorBankAccountsService extends BaseService
 {
 
-    protected $envelope_key   = 'creditor_bank_accounts';
+    protected $envelope_key = 'creditor_bank_accounts';
     protected $resource_class = '\GoCardlessPro\Resources\CreditorBankAccount';
 
 

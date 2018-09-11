@@ -21,7 +21,7 @@ use \GoCardlessPro\Core\Exception\InvalidStateException;
 class SubscriptionsService extends BaseService
 {
 
-    protected $envelope_key   = 'subscriptions';
+    protected $envelope_key = 'subscriptions';
     protected $resource_class = '\GoCardlessPro\Resources\Subscription';
 
 

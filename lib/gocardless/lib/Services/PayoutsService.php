@@ -21,7 +21,7 @@ use \GoCardlessPro\Core\Exception\InvalidStateException;
 class PayoutsService extends BaseService
 {
 
-    protected $envelope_key   = 'payouts';
+    protected $envelope_key = 'payouts';
     protected $resource_class = '\GoCardlessPro\Resources\Payout';
 
 
