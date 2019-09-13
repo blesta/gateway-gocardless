@@ -253,9 +253,9 @@ class Gocardless extends NonmerchantGateway
         // Check the payment type
         $pay_type = null;
 
-        if ($this->ifSet($_GET['pay_type'], $_POST['pay_type']) == 'subscribe') {
+        if ($this->ifSet($_GET['pay_type'], $this->ifSet($_POST['pay_type'])) == 'subscribe') {
             $pay_type = 'subscribe';
-        } elseif ($this->ifSet($_GET['pay_type'], $_POST['pay_type']) == 'onetime') {
+        } elseif ($this->ifSet($_GET['pay_type'], $this->ifSet($_POST['pay_type'])) == 'onetime') {
             $pay_type = 'onetime';
         }
 
