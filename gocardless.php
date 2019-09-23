@@ -13,7 +13,7 @@ class Gocardless extends NonmerchantGateway
     /**
      * @var string The version of this gateway
      */
-    private static $version = '1.1.1';
+    private static $version = '1.1.2';
 
     /**
      * @var string The authors of this gateway
@@ -478,8 +478,7 @@ class Gocardless extends NonmerchantGateway
         $request = file_get_contents('php://input');
 
         // Validate the webhook call
-        $headers = getallheaders();
-        $signature_header = $headers['Webhook-Signature'];
+        $signature_header = isset($_SERVER['HTTP_WEBHOOK_SIGNATURE']) ? $_SERVER['HTTP_WEBHOOK_SIGNATURE'] : '';
 
         // Load the GoCardless API
         $api = $this->getApi($this->meta['access_token'], $this->meta['dev_mode']);
