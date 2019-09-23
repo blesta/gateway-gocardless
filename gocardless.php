@@ -13,7 +13,7 @@ class Gocardless extends NonmerchantGateway
     /**
      * @var string The version of this gateway
      */
-    private static $version = '1.1.2';
+    private static $version = '1.1.3';
 
     /**
      * @var string The authors of this gateway
@@ -424,8 +424,12 @@ class Gocardless extends NonmerchantGateway
                 );
 
                 // Redirect to the authorization page
-                $this->redirectToUrl($this->ifSet($redirect_flow->redirect_url));
+                $this->redirectToUrl($redirect_flow->redirect_url);
             } catch (\GoCardlessPro\Core\Exception\ApiException $e) {
+                $this->Input->setErrors(
+                    ['internal' => ['response' => $e->getMessage()]]
+                );
+            } catch (\GoCardlessPro\Core\Exception\GoCardlessProException $e) {
                 $this->Input->setErrors(
                     ['internal' => ['response' => $e->getMessage()]]
                 );
