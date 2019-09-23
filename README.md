@@ -27,3 +27,10 @@ your Blesta installation path.
 4. Find the GoCardless gateway and click the "Install" button to install it
 
 5. Configure by setting your "Access Token" and "Webhook Secret", both of which are found in the Developer section of your GoCardless account.
+
+6. If you are running Blesta on a non-Apache server you may need to alter your .htaccess in order for payment webhook callbacks to process successfully.  Add the following lines:
+
+```
+RewriteEngine On
+RewriteRule .* - [e=HTTP_WEBHOOK_SIGNATURE:%{HTTP:Webhook-Signature}]
+```
