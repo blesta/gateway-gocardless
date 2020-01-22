@@ -11,16 +11,6 @@
 class Gocardless extends NonmerchantGateway
 {
     /**
-     * @var string The version of this gateway
-     */
-    private static $version = '1.1.3';
-
-    /**
-     * @var string The authors of this gateway
-     */
-    private static $authors = [['name' => 'Phillips Data, Inc.', 'url' => 'http://www.blesta.com']];
-
-    /**
      * @var array An array of meta data for this gateway
      */
     private $meta;
@@ -30,51 +20,13 @@ class Gocardless extends NonmerchantGateway
      */
     public function __construct()
     {
+        $this->loadConfig(dirname(__FILE__) . DS . 'config.json');
+
         // Load components required by this gateway
         Loader::loadComponents($this, ['Input', 'Session']);
 
         // Load the language required by this gateway
         Language::loadLang('gocardless', null, dirname(__FILE__) . DS . 'language' . DS);
-    }
-
-    /**
-     * Returns the name of this gateway.
-     *
-     * @return string The common name of this gateway
-     */
-    public function getName()
-    {
-        return Language::_('Gocardless.name', true);
-    }
-
-    /**
-     * Returns the version of this gateway.
-     *
-     * @return string The current version of this gateway
-     */
-    public function getVersion()
-    {
-        return self::$version;
-    }
-
-    /**
-     * Returns the name and URL for the authors of this gateway.
-     *
-     * @return array The name and URL of the authors of this gateway
-     */
-    public function getAuthors()
-    {
-        return self::$authors;
-    }
-
-    /**
-     * Return all currencies supported by this gateway.
-     *
-     * @return array A numerically indexed array containing all currency codes (ISO 4217 format) this gateway supports
-     */
-    public function getCurrencies()
-    {
-        return ['AUD', 'DKK', 'EUR', 'GBP', 'NZD', 'SEK'];
     }
 
     /**
