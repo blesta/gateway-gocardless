@@ -1,6 +1,7 @@
 <?php
 
 $lang['Gocardless.name'] = 'GoCardless';
+$lang['Gocardless.description'] = 'Collect recurring payments from more than 30 countries, and have them paid out into your existing bank account';
 $lang['Gocardless.access_token'] = 'Access Token';
 $lang['Gocardless.webhook_secret'] = 'Webhook Secret';
 $lang['Gocardless.pay_type'] = 'Payment Options';

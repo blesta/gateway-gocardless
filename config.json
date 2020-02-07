@@ -1,0 +1,13 @@
+{
+	"version": "1.2.0",
+	"name": "Gocardless.name",
+	"description": "Gocardless.description",
+	"authors": [
+		{
+			"name": "Phillips Data, Inc.",
+			"url": "http://www.blesta.com"
+		}
+	],
+	"currencies": ["AUD", "DKK", "EUR", "GBP", "NZD", "SEK"],
+	"signup_url": "https://manage.gocardless.com/signup"
+}

@@ -34,3 +34,10 @@ your Blesta installation path.
 RewriteEngine On
 RewriteRule .* - [e=HTTP_WEBHOOK_SIGNATURE:%{HTTP:Webhook-Signature}]
 ```
+
+### Blesta Compatibility
+
+|Blesta Version|Module Version|
+|--------------|--------------|
+|< v4.9.0|v1.1.0|
+|>= v4.9.0|v1.2.0|
