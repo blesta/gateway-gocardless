@@ -14,9 +14,11 @@ $lang['Gocardless.buildprocess.submit'] = 'Pay with GoCardless';
 $lang['Gocardless.buildprocess.subscription'] = 'Subscribe with GoCardless';
 
 $lang['Gocardless.webhook'] = 'GoCardless Webhook';
-$lang['Gocardless.webhook_note'] = 'Before you start using this gateway you must configure the following url as a Webhook in your GoCardless account.';
+$lang['Gocardless.webhook_note'] = 'Before you start using this gateway you must configure the following url as a Webhook in your GoCardless account. The Webhook Secret must be at least 40 characters long.';
 
 // Errors
 $lang['Gocardless.!error.access_token.valid'] = 'You must enter a valid Access Token.';
-$lang['Gocardless.!error.webhook_secret.valid'] = 'You must enter a valid Webhook Secret.';
+$lang['Gocardless.!error.webhook_secret.valid'] = 'You must enter a valid Webhook Secret at least 40 characters long.';
 $lang['Gocardless.!error.dev_mode.valid'] = 'Developer mode must be set to "true" if given.';
+
+$lang['Gocardless.!tooltip.webhook_secret'] = 'The Webhook Secret must be at least 40 characters long.';
