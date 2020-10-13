@@ -7,8 +7,11 @@
     </li>
     <li>
         <?php
-            $this->Form->label($this->_('Gocardless.webhook_secret', true), 'webhook_secret');
-            $this->Form->fieldText('webhook_secret', $this->Html->ifSet($meta['webhook_secret']), ['id' => 'webhook_secret']);
+            $this->Form->label($this->_('Gocardless.webhook_secret', true), 'webhook_secret', ['class' => 'inline']);
+            ?>
+            <span class="tooltip block"><?php $this->_('AppController.tooltip.text'); ?><div><?php $this->_('Gocardless.!tooltip.webhook_secret'); ?></div></span>
+            <?php
+            $this->Form->fieldText('webhook_secret', $this->Html->ifSet($meta['webhook_secret']), ['id' => 'webhook_secret', 'class' => 'block']);
         ?>
     </li>
     <li>
