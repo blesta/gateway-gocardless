@@ -8,6 +8,6 @@
 			"url": "http://www.blesta.com"
 		}
 	],
-	"currencies": ["AUD", "DKK", "EUR", "GBP", "NZD", "SEK"],
+	"currencies": ["AUD", "CAD", "DKK", "EUR", "GBP", "NZD", "SEK", "USD"],
 	"signup_url": "https://manage.gocardless.com/signup"
 }
