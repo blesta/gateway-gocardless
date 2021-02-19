@@ -194,10 +194,10 @@ class Gocardless extends NonmerchantGateway
         // Check if this transaction is eligible for subscription
         $recurring = false;
 
-        if ($this->ifSet($options['recur']) &&
-            $this->ifSet($options['recur']['amount']) > 0 &&
-            $this->ifSet($options['recur']['amount']) == $amount &&
-            $this->ifSet($options['recur']['period']) !== 'day'
+        if ((isset($options['recur']) ? $options['recur'] : null) &&
+            (isset($options['recur']['amount']) ? $options['recur']['amount'] : null) > 0 &&
+            (isset($options['recur']['amount']) ? $options['recur']['amount'] : null) == $amount &&
+            (isset($options['recur']['period']) ? $options['recur']['period'] : null) !== 'day'
         ) {
             $recurring = true;
         }
@@ -223,12 +223,12 @@ class Gocardless extends NonmerchantGateway
                         'session_token' => $session_token
                     ]
                 ];
-                $this->log($this->ifSet($_SERVER['REQUEST_URI']), serialize($params), 'input', true);
-                $redirect_flow = $api->redirectFlows()->complete($this->ifSet($_GET['redirect_flow_id']), $params);
+                $this->log((isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : null), serialize($params), 'input', true);
+                $redirect_flow = $api->redirectFlows()->complete((isset($_GET['redirect_flow_id']) ? $_GET['redirect_flow_id'] : null), $params);
 
                 // Log the API response
                 $this->log(
-                    $this->ifSet($_SERVER['REQUEST_URI']),
+                    (isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : null),
                     serialize($redirect_flow),
                     'output',
                     $this->getResponseStatus($redirect_flow)
@@ -238,7 +238,7 @@ class Gocardless extends NonmerchantGateway
                 if ($pay_type == 'subscribe') {
                     // Set the inverval unit
                     $interval_unit = null;
-                    switch ($this->ifSet($options['recur']['period'])) {
+                    switch ((isset($options['recur']['period']) ? $options['recur']['period'] : null)) {
                         case 'week':
                             $interval_unit = 'weekly';
                             break;
@@ -253,13 +253,13 @@ class Gocardless extends NonmerchantGateway
                     // Create subscription payment
                     $params = [
                         'params' => [
-                            'amount' => $this->ifSet($options['recur']['amount']) * 100,
-                            'currency' => $this->ifSet($this->currency),
-                            'interval_unit' => $this->ifSet($interval_unit),
-                            'interval' => $this->ifSet($options['recur']['term']),
+                            'amount' => (isset($options['recur']['amount']) ? $options['recur']['amount'] : null) * 100,
+                            'currency' => (isset($this->currency) ? $this->currency : null),
+                            'interval_unit' => (isset($interval_unit) ? $interval_unit : null),
+                            'interval' => (isset($options['recur']['term']) ? $options['recur']['term'] : null),
                             'metadata' => [
-                                'invoices' => $this->ifSet($invoices),
-                                'client_id' => $this->ifSet($contact_info['client_id'])
+                                'invoices' => (isset($invoices) ? $invoices : null),
+                                'client_id' => (isset($contact_info['client_id']) ? $contact_info['client_id'] : null)
                             ],
                             'links' => [
                                 'mandate' => $this->ifSet(
@@ -277,31 +277,31 @@ class Gocardless extends NonmerchantGateway
                         $params['month'] = strtolower(date('F'));
                     }
 
-                    $this->log($this->ifSet($_SERVER['REQUEST_URI']), serialize($params), 'input', true);
+                    $this->log((isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : null), serialize($params), 'input', true);
                     $subscription = $api->subscriptions()->create($params);
 
                     // Log the API response
                     $this->log(
-                        $this->ifSet($_SERVER['REQUEST_URI']),
+                        (isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : null),
                         serialize($subscription),
                         'output',
                         $this->getResponseStatus($subscription)
                     );
 
                     // Redirect to the return url
-                    $return_url = $this->generateReturnUrl($this->ifSet($options['return_url']), [
-                        'subscription_id' => $this->ifSet($subscription->api_response->body->subscriptions->id)
+                    $return_url = $this->generateReturnUrl((isset($options['return_url']) ? $options['return_url'] : null), [
+                        'subscription_id' => (isset($subscription->api_response->body->subscriptions->id) ? $subscription->api_response->body->subscriptions->id : null)
                     ]);
                     $this->redirectToUrl($return_url);
                 } elseif ($pay_type == 'onetime') {
                     // Create one time payment
                     $params = [
                         'params' => [
-                            'amount' => $this->ifSet($amount) * 100,
-                            'currency' => $this->ifSet($this->currency),
+                            'amount' => (isset($amount) ? $amount : null) * 100,
+                            'currency' => (isset($this->currency) ? $this->currency : null),
                             'metadata' => [
-                                'invoices' => $this->ifSet($invoices),
-                                'client_id' => $this->ifSet($contact_info['client_id'])
+                                'invoices' => (isset($invoices) ? $invoices : null),
+                                'client_id' => (isset($contact_info['client_id']) ? $contact_info['client_id'] : null)
                             ],
                             'links' => [
                                 'mandate' => $this->ifSet(
@@ -310,20 +310,20 @@ class Gocardless extends NonmerchantGateway
                             ]
                         ]
                     ];
-                    $this->log($this->ifSet($_SERVER['REQUEST_URI']), serialize($params), 'input', true);
+                    $this->log((isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : null), serialize($params), 'input', true);
                     $payment = $api->payments()->create($params);
 
                     // Log the API response
                     $this->log(
-                        $this->ifSet($_SERVER['REQUEST_URI']),
+                        (isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : null),
                         serialize($payment),
                         'output',
                         $this->getResponseStatus($subscription)
                     );
 
                     // Redirect to the return url
-                    $return_url = $this->generateReturnUrl($this->ifSet($options['return_url']), [
-                        'payment_id' => $this->ifSet($payment->api_response->body->payments->id)
+                    $return_url = $this->generateReturnUrl((isset($options['return_url']) ? $options['return_url'] : null), [
+                        'payment_id' => (isset($payment->api_response->body->payments->id) ? $payment->api_response->body->payments->id : null)
                     ]);
                     $this->redirectToUrl($return_url);
                 }
@@ -340,36 +340,36 @@ class Gocardless extends NonmerchantGateway
 
             // Generate a new session token
             $this->Session->clear('gocardless_token');
-            $session_token = 'SESS_' . base64_encode(md5(uniqid() . $this->ifSet($contact_info['client_id'])));
+            $session_token = 'SESS_' . base64_encode(md5(uniqid() . (isset($contact_info['client_id']) ? $contact_info['client_id'] : null)));
             $this->Session->write('gocardless_token', $session_token);
 
             // Create a new redirect flow
             try {
                 $params = [
                     'params' => [
-                        'description' => $this->ifSet($options['description'], $company->name),
+                        'description' => (isset($options['description']) ? $options['description'] : $company->name),
                         'session_token' => $session_token,
                         'success_redirect_url' => $redirect_url,
                         'prefilled_customer' => [
-                            'given_name' => $this->ifSet($client->first_name),
-                            'family_name' => $this->ifSet($client->last_name),
-                            'email' => $this->ifSet($client->email),
-                            'address_line1' => $this->ifSet($client->address1),
-                            'address_line2' => $this->ifSet($client->address2),
-                            'city' => $this->ifSet($client->city),
-                            'region' => $this->ifSet($client->state),
-                            'postal_code' => $this->ifSet($client->zip),
-                            'country_code' => $this->ifSet($client->country),
-                            'company_name' => $this->ifSet($client->company)
+                            'given_name' => (isset($client->first_name) ? $client->first_name : null),
+                            'family_name' => (isset($client->last_name) ? $client->last_name : null),
+                            'email' => (isset($client->email) ? $client->email : null),
+                            'address_line1' => (isset($client->address1) ? $client->address1 : null),
+                            'address_line2' => (isset($client->address2) ? $client->address2 : null),
+                            'city' => (isset($client->city) ? $client->city : null),
+                            'region' => (isset($client->state) ? $client->state : null),
+                            'postal_code' => (isset($client->zip) ? $client->zip : null),
+                            'country_code' => (isset($client->country) ? $client->country : null),
+                            'company_name' => (isset($client->company) ? $client->company : null)
                         ]
                     ]
                 ];
-                $this->log($this->ifSet($_SERVER['REQUEST_URI']), serialize($params), 'input', true);
+                $this->log((isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : null), serialize($params), 'input', true);
                 $redirect_flow = $api->redirectFlows()->create($params);
 
                 // Log the API response
                 $this->log(
-                    $this->ifSet($_SERVER['REQUEST_URI']),
+                    (isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : null),
                     serialize($redirect_flow),
                     'output',
                     $this->getResponseStatus($redirect_flow)
@@ -468,7 +468,7 @@ class Gocardless extends NonmerchantGateway
 
         try {
             if (isset($event_fields['payment_id'])) {
-                $payment = $api->payments()->get($this->ifSet($event_fields['payment_id']));
+                $payment = $api->payments()->get((isset($event_fields['payment_id']) ? $event_fields['payment_id'] : null));
                 $payment_details = $payment->api_response->body->payments;
             }
 
@@ -487,7 +487,7 @@ class Gocardless extends NonmerchantGateway
 
         // Log the API response
         $this->log(
-            $this->ifSet($_SERVER['REQUEST_URI']),
+            (isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : null),
             serialize($payment_details),
             'output',
             $this->getResponseStatus($payment)
@@ -496,7 +496,7 @@ class Gocardless extends NonmerchantGateway
         // Capture the webhook status, or reject it if invalid
         $status = 'error';
 
-        switch (strtolower($this->ifSet($event_fields['payment_status']))) {
+        switch (strtolower((isset($event_fields['payment_status']) ? $event_fields['payment_status'] : null))) {
             case 'payment_submitted':
                 $status = 'approved';
                 break;
@@ -544,26 +544,26 @@ class Gocardless extends NonmerchantGateway
         // Get client id
         $client_id = $this->ifSet(
             $payment_details->metadata->client_id,
-            $this->ifSet($subscription_details->metadata->client_id)
+            (isset($subscription_details->metadata->client_id) ? $subscription_details->metadata->client_id : null)
         );
 
         // Get invoices
         $invoices = $this->ifSet(
             $payment_details->metadata->invoices,
-            $this->ifSet($subscription_details->metadata->invoices)
+            (isset($subscription_details->metadata->invoices) ? $subscription_details->metadata->invoices : null)
         );
 
         // Force 2-decimal places only
-        $amount = $this->ifSet($payment_details->amount, 0) / 100;
+        $amount = (isset($payment_details->amount) ? $payment_details->amount : 0) / 100;
         $amount = number_format($amount, 2, '.', '');
 
         return [
             'client_id' => $client_id,
             'amount' => $amount,
-            'currency' => $this->ifSet($payment_details->currency),
+            'currency' => (isset($payment_details->currency) ? $payment_details->currency : null),
             'status' => $status,
             'reference_id' => null,
-            'transaction_id' => $this->ifSet($payment_details->id),
+            'transaction_id' => (isset($payment_details->id) ? $payment_details->id : null),
             'invoices' => $this->unserializeInvoices($invoices)
         ];
     }
@@ -591,7 +591,7 @@ class Gocardless extends NonmerchantGateway
         $api = $this->getApi($this->meta['access_token'], $this->meta['dev_mode']);
 
         // Get the client id
-        $client_id = $this->ifSet($get['client_id']);
+        $client_id = (isset($get['client_id']) ? $get['client_id'] : null);
 
         // Check if the payment is one time or a subscription
         $pay_type = 'onetime';
@@ -603,21 +603,21 @@ class Gocardless extends NonmerchantGateway
         // Get the payment details
         $payment_details = null;
 
-        $this->log($this->ifSet($_SERVER['REQUEST_URI']), serialize($get), 'input', true);
+        $this->log((isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : null), serialize($get), 'input', true);
 
         try {
             if ($pay_type == 'subscribe') {
-                $payment = $api->subscriptions()->get($this->ifSet($get['subscription_id']));
+                $payment = $api->subscriptions()->get((isset($get['subscription_id']) ? $get['subscription_id'] : null));
                 $payment_details = $payment->api_response->body->subscriptions;
                 $payment_details->id = null;
             } elseif ($pay_type == 'onetime') {
-                $payment = $api->payments()->get($this->ifSet($get['payment_id']));
+                $payment = $api->payments()->get((isset($get['payment_id']) ? $get['payment_id'] : null));
                 $payment_details = $payment->api_response->body->payments;
             }
 
             // Log the API response
             $this->log(
-                $this->ifSet($_SERVER['REQUEST_URI']),
+                (isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : null),
                 serialize($payment_details),
                 'output',
                 $this->getResponseStatus($payment)
@@ -631,16 +631,16 @@ class Gocardless extends NonmerchantGateway
         }
 
         // Force 2-decimal places only
-        $amount = $this->ifSet($payment_details->amount, 0) / 100;
+        $amount = (isset($payment_details->amount) ? $payment_details->amount : 0) / 100;
         $amount = number_format($amount, 2, '.', '');
 
         return [
             'client_id' => $client_id,
             'amount' => $amount,
-            'currency' => $this->ifSet($payment_details->currency),
-            'invoices' => $this->unserializeInvoices($this->ifSet($payment_details->metadata->invoices)),
+            'currency' => (isset($payment_details->currency) ? $payment_details->currency : null),
+            'invoices' => $this->unserializeInvoices((isset($payment_details->metadata->invoices) ? $payment_details->metadata->invoices : null)),
             'status' => 'approved', // we wouldn't be here if it weren't, right?
-            'transaction_id' => $this->ifSet($payment_details->id),
+            'transaction_id' => (isset($payment_details->id) ? $payment_details->id : null),
         ];
     }
 
@@ -688,7 +688,7 @@ class Gocardless extends NonmerchantGateway
 
             // Log the API response
             $this->log(
-                $this->ifSet($_SERVER['REQUEST_URI']),
+                (isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : null),
                 serialize($payment_details),
                 'output',
                 $this->getResponseStatus($payment)
@@ -702,7 +702,7 @@ class Gocardless extends NonmerchantGateway
 
             // Log the API response
             $this->log(
-                $this->ifSet($_SERVER['REQUEST_URI']),
+                (isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : null),
                 serialize($subscription_details),
                 'output',
                 $this->getResponseStatus($subscription)
@@ -715,7 +715,7 @@ class Gocardless extends NonmerchantGateway
 
             return [
                 'status' => 'void',
-                'transaction_id' => $this->ifSet($transaction_id)
+                'transaction_id' => (isset($transaction_id) ? $transaction_id : null)
             ];
         } catch (\GoCardlessPro\Core\Exception\ApiException $e) {
             $this->Input->setErrors(
@@ -749,14 +749,14 @@ class Gocardless extends NonmerchantGateway
         $amount = number_format($amount, 2, '.', '');
 
         // Process the refund (only one-time payments can be refunded)
-        if (substr($this->ifSet($transaction_id), 0, 2) == 'PM') {
+        if (substr((isset($transaction_id) ? $transaction_id : null), 0, 2) == 'PM') {
             $params = [
                 'params' => [
-                    'amount' => $this->ifSet($amount) * 100,
-                    'total_amount_confirmation' => $this->ifSet($amount) * 100,
-                    'reference' => $this->ifSet($reference_id),
+                    'amount' => (isset($amount) ? $amount : null) * 100,
+                    'total_amount_confirmation' => (isset($amount) ? $amount : null) * 100,
+                    'reference' => (isset($reference_id) ? $reference_id : null),
                     'links' => [
-                        'payment' => $this->ifSet($transaction_id)
+                        'payment' => (isset($transaction_id) ? $transaction_id : null)
                     ]
                 ]
             ];
@@ -772,7 +772,7 @@ class Gocardless extends NonmerchantGateway
 
                 // Log the successful response
                 $this->log(
-                    $this->ifSet($_SERVER['REQUEST_URI']),
+                    (isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : null),
                     serialize($refund),
                     'output',
                     $this->getResponseStatus($refund)
@@ -780,7 +780,7 @@ class Gocardless extends NonmerchantGateway
 
                 return [
                     'status' => 'refunded',
-                    'transaction_id' => $this->ifSet($refund->api_response->body->refunds->id),
+                    'transaction_id' => (isset($refund->api_response->body->refunds->id) ? $refund->api_response->body->refunds->id : null),
                 ];
             } catch (\GoCardlessPro\Core\Exception\ApiException $e) {
                 $this->Input->setErrors(
@@ -858,7 +858,7 @@ class Gocardless extends NonmerchantGateway
         }
 
         return new \GoCardlessPro\Client([
-            'access_token' => $this->ifSet($access_token),
+            'access_token' => (isset($access_token) ? $access_token : null),
             'environment' => $environment
         ]);
     }
@@ -912,8 +912,8 @@ class Gocardless extends NonmerchantGateway
     {
         $status = false;
 
-        if ($this->ifSet($api_response->api_response->status_code) >= 200
-            && $this->ifSet($api_response->api_response->status_code) < 300
+        if ((isset($api_response->api_response->status_code) ? $api_response->api_response->status_code : null) >= 200
+            && (isset($api_response->api_response->status_code) ? $api_response->api_response->status_code : null) < 300
         ) {
             $status = true;
         }
