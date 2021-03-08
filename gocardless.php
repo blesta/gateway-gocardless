@@ -205,9 +205,21 @@ class Gocardless extends NonmerchantGateway
         // Check the payment type
         $pay_type = null;
 
-        if ($this->ifSet($_GET['pay_type'], $this->ifSet($_POST['pay_type'])) == 'subscribe') {
+        if (
+            (
+                isset($_GET['pay_type'])
+                    ? $_GET['pay_type']
+                    : (isset($_POST['pay_type']) ? $_POST['pay_type'] : null)
+            ) == 'subscribe'
+        ) {
             $pay_type = 'subscribe';
-        } elseif ($this->ifSet($_GET['pay_type'], $this->ifSet($_POST['pay_type'])) == 'onetime') {
+        } elseif (
+            (
+                isset($_GET['pay_type'])
+                    ? $_GET['pay_type']
+                    : (isset($_POST['pay_type']) ? $_POST['pay_type'] : null)
+            ) == 'onetime'
+        ) {
             $pay_type = 'onetime';
         }
 
@@ -262,9 +274,9 @@ class Gocardless extends NonmerchantGateway
                                 'client_id' => (isset($contact_info['client_id']) ? $contact_info['client_id'] : null)
                             ],
                             'links' => [
-                                'mandate' => $this->ifSet(
-                                    $redirect_flow->api_response->body->redirect_flows->links->mandate
-                                )
+                                'mandate' => isset($redirect_flow->api_response->body->redirect_flows->links->mandate)
+                                    ? $redirect_flow->api_response->body->redirect_flows->links->mandate
+                                    : null
                             ]
                         ]
                     ];
@@ -542,15 +554,15 @@ class Gocardless extends NonmerchantGateway
         }
 
         // Get client id
-        $client_id = $this->ifSet(
-            $payment_details->metadata->client_id,
-            (isset($subscription_details->metadata->client_id) ? $subscription_details->metadata->client_id : null)
+        $client_id = (isset($payment_details->metadata->client_id)
+            ? $payment_details->metadata->client_id
+            : (isset($subscription_details->metadata->client_id) ? $subscription_details->metadata->client_id : null)
         );
 
         // Get invoices
-        $invoices = $this->ifSet(
-            $payment_details->metadata->invoices,
-            (isset($subscription_details->metadata->invoices) ? $subscription_details->metadata->invoices : null)
+        $invoices = (isset($payment_details->metadata->invoices)
+            ? $payment_details->metadata->invoices
+            : (isset($subscription_details->metadata->invoices) ? $subscription_details->metadata->invoices : null)
         );
 
         // Force 2-decimal places only
