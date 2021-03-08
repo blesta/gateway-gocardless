@@ -316,8 +316,9 @@ class Gocardless extends NonmerchantGateway
                                 'client_id' => (isset($contact_info['client_id']) ? $contact_info['client_id'] : null)
                             ],
                             'links' => [
-                                'mandate' => $this->ifSet(
-                                    $redirect_flow->api_response->body->redirect_flows->links->mandate
+                                'mandate' => (isset($redirect_flow->api_response->body->redirect_flows->links->mandate)
+                                    ? $redirect_flow->api_response->body->redirect_flows->links->mandate
+                                    : null
                                 )
                             ]
                         ]
