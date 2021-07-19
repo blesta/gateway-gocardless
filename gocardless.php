@@ -858,6 +858,12 @@ class Gocardless extends NonmerchantGateway
      */
     private function getApi($access_token, $dev_mode = 'false')
     {
+        // Load the Guzzle autoloader
+        Loader::load(dirname(__FILE__) . DS . 'lib' . DS . 'guzzle' . DS . 'autoloader.php');
+
+        // Load the GoCardless API
+        Loader::load(dirname(__FILE__) . DS . 'lib' . DS . 'gocardless' . DS . 'lib' . DS . 'loader.php');
+
         if ($dev_mode == 'true') {
             $environment = \GoCardlessPro\Environment::SANDBOX;
         } elseif ($dev_mode == 'false') {
