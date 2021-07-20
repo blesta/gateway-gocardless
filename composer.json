@@ -4,7 +4,8 @@
     "license": "proprietary",
     "type": "blesta-gateway-nonmerchant",
     "require": {
-        "blesta/composer-installer": "~1.0"
+        "blesta/composer-installer": "~1.0",
+        "gocardless/gocardless-pro": "^2.1"
     },
     "require-dev": {
         "phpunit/phpunit": "~4.6",
