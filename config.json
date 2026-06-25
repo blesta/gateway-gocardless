@@ -1,5 +1,5 @@
 {
-    "version": "3.0.0",
+    "version": "3.0.1",
     "name": "Gocardless.name",
     "description": "Gocardless.description",
     "authors": [
@@ -18,5 +18,9 @@
         "SEK",
         "USD"
     ],
-    "signup_url": "https://manage.gocardless.com/signup"
+    "signup_url": "https://manage.gocardless.com/signup",
+    "logo": {
+        "light": "views/default/images/logo.svg",
+        "dark": "views/default/images/logo-dark.svg"
+    }
 }
